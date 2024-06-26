@@ -1,0 +1,27 @@
+%ATOMO SIMPLE
+atomo(padre). 
+atomo(padre).
+atomo(padre,hijo).
+
+%ATOMO CON COMILLA
+atomo('padre').
+atomo('padre').
+isPadre("padre",'hijo').
+
+
+%VARIABLES
+X = 10.
+Z = _. % Variable anónima
+Y = 'variable'.
+
+%BOOLEANOS
+true.
+fail.
+
+X is 5 .
+X  is 6 +6 * 8 .
+
+
+
+X is 5 .  X  is 6 +6 * 8 .
+
