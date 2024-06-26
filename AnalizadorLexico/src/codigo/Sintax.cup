@@ -1,0 +1,107 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal Linea, Comillas , Comilla , Punto , Atom , Variable , 
+         Numero  , Coma , Palabra_clave , Igual , Op_booleano,
+         Var_anonima ,
+
+     Int, Cadena, If, Else, Do, While, For,
+     Suma, Resta, Multiplicacion, Division, Op_logico, Op_relacional,
+    Op_atribucion, Op_incremento, Parentesis_a, Parentesis_c,
+    Llave_a, Llave_c, Corchete_a, Corchete_c, Main, P_coma,
+
+
+
+    ERROR;
+non terminal PROGRAMA, EXPRESION  , CONSULTA ,CUERPO , TERMINO_C ,TERMINO , LISTA , ASIGNACION , EXP_ARITMETICA , OPERADOR , SENTENCIA_BOOLEANA ;
+
+start with PROGRAMA;
+
+PROGRAMA ::= 
+    SENTENCIA_BOOLEANA Punto |
+    SENTENCIA_BOOLEANA Punto PROGRAMA |
+    Op_booleano Punto |
+    Op_booleano Punto PROGRAMA | 
+    EXPRESION Punto |
+    EXPRESION Punto PROGRAMA
+;
+
+
+EXPRESION ::=
+    ASIGNACION |
+    Atom Parentesis_a CUERPO Parentesis_c |
+    Atom
+;
+
+ASIGNACION ::= 
+    Variable Igual TERMINO_C |
+    Var_anonima Igual TERMINO_C 
+     
+   
+    
+;
+
+
+
+CUERPO ::=
+    TERMINO_C |
+    TERMINO_C Coma CUERPO
+;
+
+TERMINO_C ::=
+    EXP_ARITMETICA |
+    TERMINO |
+    Comillas TERMINO Comillas  |
+    Comilla TERMINO Comilla  
+;
+
+TERMINO ::=
+    Variable |
+    Var_anonima | 
+    Numero |
+    Atom |
+    Atom Parentesis_a CUERPO Parentesis_c |
+    LISTA
+;
+
+LISTA ::=
+    Corchete_a Corchete_c |
+    Corchete_a CUERPO Corchete_c
+;
+
+EXP_ARITMETICA ::= 
+   Numero OPERADOR  Numero |
+   Numero OPERADOR  EXP_ARITMETICA
+;
+
+
+OPERADOR ::= 
+   Suma | Resta | Multiplicacion | Division
+;
+
+SENTENCIA_BOOLEANA ::= 
+    EXP_ARITMETICA Op_relacional Op_booleano |
+    EXP_ARITMETICA Op_relacional Numero |
+    EXP_ARITMETICA Op_relacional EXP_ARITMETICA |
+    EXP_ARITMETICA Op_relacional Comillas Comillas |
+    EXP_ARITMETICA Op_relacional Comillas EXP_ARITMETICA Comillas
+;
+
+
+
+
+
